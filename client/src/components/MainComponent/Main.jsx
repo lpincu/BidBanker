@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css';
 import { Dropdown } from 'reactjs-dropdown-component';
 import axios from 'axios';
@@ -16,19 +16,20 @@ const axiosInstance = axios.create({
 const Main = () => {
 
   const [campaigns, setCampaigns] = useState([]);
-  const [selectedCampaign, setSelectedCampaign] = useState('');
+  const [_, setSelectedCampaign] = useState('');
   const [bids, setBids] = useState([])
   const [socket, setSocket] = useState();
 
   useEffect(() => {
     getCampaigns().then( fetchedCampaigns => {
+      console.log('fetchedCampaigns', fetchedCampaigns)
       setCampaigns(fetchedCampaigns.data.map(campaign => ({ value: campaign, label: campaign })));
     })
   },[])
 
   const handleBid = (newBid) => {
     if (!newBid.status) {
-      setBids((prevBids) => { // Anonymous function inside setter to ensure that the the most updated data is held
+      setBids((prevBids) => { // Anonymous function inside setter to ensure that the most updated data is held
         return [...prevBids, { ...newBid }];
       });
     } else {
