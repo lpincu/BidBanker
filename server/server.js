@@ -21,7 +21,7 @@ const subscribeToRedis = () => {
   return redisSubscriber;
 }
 
-const ListenToPublishMessages = (sub, io) => {
+const listenToPublishMessages = (sub, io) => {
   sub.on('pmessage', async (pattern, channel, message) => {
     if (channel === '__keyevent@0__:set') {
       try {
@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
 });
 
 const subscribe = subscribeToRedis();
-ListenToPublishMessages(subscribe, io);
+listenToPublishMessages(subscribe, io);
 
 app.get("/getAllCampaigns", (req, res) => {
   try {
